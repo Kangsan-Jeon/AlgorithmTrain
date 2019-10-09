@@ -12,6 +12,14 @@ Algorithm
 '''
 
 def getHouse(graph, N, y, x, k):
+    '''
+    :param graph: map
+    :param N: map의 크기
+    :param y: 방범 영역의 중심의 y좌표
+    :param x: 방범 영역의 중심의 x좌표
+    :param k: 방범 구역의 크기
+    :return: 현재 위치에서 방범 구역이 (k-1)에서 k로 증가했을 때 추가되는 집의 수
+    '''
     num = 0     # 집 수
     for i in range(max(0, y-k+1), min(y+k, N)):
         if i == y-k+1 or i == y+k-1:
@@ -25,16 +33,32 @@ def getHouse(graph, N, y, x, k):
     return num
 
 def getMaxHouse(graph, table, N, M, k):
+    '''
+    :param graph: map
+    :param table: 각 좌표에서 방범 크기가 (k-1)일 때 포함되는 집의 수
+    :param N: map의 크기
+    :param M: 한 집당 발생하는 수익
+    :param k: 방범 구역의 크기
+    :return: 방범 구역의 크기가 k일 때 가장 많은 서비스를 제공할 수 있는 집의 수
+    '''
     max_house = 0   # 좌표 별로 포함하는 가장 많은 집
     cost = k**2 + (k-1)**2
     for i in range(N):
         for j in range(N):
             table[i][j] += getHouse(graph, N, i, j, k)
-            if table[i][j]*M >= cost:
+            if table[i][j]*M >= cost:   # 손해가 발생하지 않는 경우에만 max_house를 갱신
                 max_house = max(max_house, table[i][j])
     return max_house
 
 def solve(graph, N, M, max_k, total_house):
+    '''
+    :param graph: map
+    :param N: map의 크기
+    :param M: 한 집당 발생하는 수익
+    :param max_k: 가능한 k의 maximum + 1의 값
+    :param total_house: map상의 전체 집 수
+    :return: 가능한 k에 대하여 가장 많은 서비스를 제공할 수 있는 집의 수
+    '''
     k = 2
     max_house = 1
     table = deepcopy(graph)
