@@ -91,7 +91,5 @@ def main():
         result = solve(magnet1, magnet2, magnet3, magnet4, order)
         print("#{} {}".format(t+1, result))
 
-
-
 if __name__ == "__main__":
     main()
