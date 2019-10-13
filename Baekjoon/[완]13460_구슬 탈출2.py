@@ -4,11 +4,12 @@ dx = [-1, 1, 0, 0]  # left, right, up, down
 dy = [0, 0, -1, 1]
 
 def go(myMap, visited, blue, red, d_y, d_x, cnt, myQ):
-    # print("origin: red = {}, blue = {}".format(red, blue))
     red_y, red_x = red
     blue_y, blue_x = blue
     red_state = False
     blue_state = False
+
+    # 파랑 구슬과 빨간 구슬 중 하나가 벽에 부딪힐 때까지 go
     while(myMap[red_y][red_x] != "#" and myMap[blue_y][blue_x] != "#"):
         if myMap[red_y][red_x] == "O":
             red_state = True
@@ -21,9 +22,11 @@ def go(myMap, visited, blue, red, d_y, d_x, cnt, myQ):
         blue_y += d_y
         blue_x += d_x
 
+    # 파란구슬이 홀에 들어가면 return 0
     if blue_state:
         return 0
 
+    # 빨간 구슬이 벽에 부딪히거나 홀에 들어갔을 때, 파란 구슬을 마저 움직임
     if myMap[red_y][red_x] == "#" or red_state:
         while(myMap[blue_y][blue_x] != "#"):
             if myMap[blue_y][blue_x] == "O":
@@ -31,10 +34,14 @@ def go(myMap, visited, blue, red, d_y, d_x, cnt, myQ):
                 break
             blue_y += d_y
             blue_x += d_x
+
+            # 파란 구슬의 다음 경로가 빨간 구슬의 위치이고 빨간 구슬이 홀에 들어가지 않았을 때,
+            # 파란 구슬은 더이상 움직이지 않는다
             if (blue_y, blue_x) == (red_y, red_x) and not red_state:
                 blue_y -= d_y
                 blue_x -= d_x
                 break
+    # 파란 구슬이 벽에 부딕히거나 홀에 들어갔을 때, 빨간 구슬을 마저 움직임
     else:
         while(myMap[red_y][red_x] != "#"):
             if myMap[red_y][red_x] == "O":
@@ -42,16 +49,21 @@ def go(myMap, visited, blue, red, d_y, d_x, cnt, myQ):
                 break
             red_y += d_y
             red_x += d_x
+            # 빨간 구슬의 다음 경로가 파란 구슬의 위치이고 파란 구슬이 홀에 들어가지 않았을 때,
+            # 빨간 구슬은 더이상 움직이지 않는다
             if (blue_y, blue_x) == (red_y, red_x) and not blue_state:
                 red_y -= d_y
                 red_x -= d_x
                 break
 
+    # 파란 구슬이 홀에 들어간 경우
     if blue_state:
         return 0
+    # 빨간 구슬만 홀에 들어간 경우
     elif red_state:
         return cnt+1
     else:
+        # 두 구슬 다 홀에 들어가지 않은 경우, 큐와 visited에 두 구슬의 위치를 추가
         temp = [(blue_y - d_y, blue_x - d_x), (red_y - d_y, red_x - d_x)]
         if (temp[0], temp[1]) not in visited:
             visited.append((temp[0], temp[1]))
