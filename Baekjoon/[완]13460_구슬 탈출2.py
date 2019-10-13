@@ -1,9 +1,19 @@
 from collections import deque
 
+'''
+Algorithm : BFS
+1. 구슬은 빨간 구슬과 파란 구슬이 둘 중 하나라도 움직일 수 있는 방향으로 움직인다.
+2. 움직임은 move함수로 구현되며 다 움직인 결과 좌표가 visited에 없는 경우 q에 추가한다.
+=> q에 추가한다면 파란 구슬의 좌표와 빨간 구슬의 좌표 모두 visited에 함께 저장한다.
+※ 한 턴에 둘 중 하나라도 움직인다면 전혀 다른 상황이므로 빨간 구슬과 파란 구슬의 좌표는 visited에 함께 저장해야한다.
+3. 빨간 구슬만 홀에 들어갈 경우 move함수는 횟수를 반환한다.
+=> 파란 구슬이 홀에 들어가거나 홀에 들어간 구슬이 없는 경우 0을 반환한다.
+'''
+
 dx = [-1, 1, 0, 0]  # left, right, up, down
 dy = [0, 0, -1, 1]
 
-def go(myMap, visited, blue, red, d_y, d_x, cnt, myQ):
+def move(myMap, visited, blue, red, d_y, d_x, cnt, myQ):
     red_y, red_x = red
     blue_y, blue_x = blue
     red_state = False
@@ -86,7 +96,7 @@ def solve(myMap, blue, red):
             new_blue_y = blue_y + dy[i]
             new_blue_x = blue_x + dx[i]
             if (myMap[new_red_y][new_red_x] != "#" or myMap[new_blue_y][new_blue_x] != "#"):
-                flag = go(myMap, visited, (blue_y, blue_x), (red_y, red_x), dy[i], dx[i], cnt, myQ)
+                flag = move(myMap, visited, (blue_y, blue_x), (red_y, red_x), dy[i], dx[i], cnt, myQ)
                 if flag:
                     if flag > 10:
                         flag = -1
