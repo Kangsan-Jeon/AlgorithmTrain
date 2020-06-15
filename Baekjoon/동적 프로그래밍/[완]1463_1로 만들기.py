@@ -7,7 +7,7 @@ def solve(N, arr):
     for i in range(1, N+1):
         if arr[i] > arr[i-1] + 1:
             arr[i] = arr[i-1] + 1
-        if i%2 == 0 and arr[i] > arr[i//2] +1:
+        if i%2 == 0 and arr[i] > arr[i//2] + 1:
             arr[i] = arr[i//2] + 1
         if i%3 == 0 and arr[i] > arr[i//3] + 1:
             arr[i] = arr[i//3] + 1
