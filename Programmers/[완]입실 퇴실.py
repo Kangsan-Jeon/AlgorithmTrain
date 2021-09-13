@@ -13,17 +13,19 @@ def solution(enter, leave):
 
     while len(leave) > 0:
         out_person = leave.pop(0)
+        # 나가는 사람이 회의실에 없는 경우 -> 그 사람이 나올 때까지 enter에서 pop
         if out_person not in room:
             in_person = None
             while (in_person != out_person) and (len(enter) != 0):
                 in_person = enter.pop(0)
                 room.append(in_person)
                 if in_person is not None:
+                    # 아직 나가지 않은 사람이 들어올 경우 기존에 회의실에 있던 사람과 만난 것을 표시
                     for person in room:
                         if in_person != person:
                             meeting_table[in_person-1][person-1] = True
                             meeting_table[person-1][in_person-1] = True
-        room.remove(out_person)
+        room.remove(out_person) # 나가는 사람을 회의실에서 제거
     answer = [sum(x) for x in meeting_table]
     return answer
 
