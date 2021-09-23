@@ -1,14 +1,14 @@
 function get_averages(scores) {
     var average = 0
-    let result = []
-    let score = []
-    for (var i=0; i < scores.length; i++) {
+    var result = []
+    var score = []
+    for (let i=0; i < scores.length; i++) {
         score = []
-        for (var idx=0; idx < scores.length; idx++) {
+        for (let idx=0; idx < scores.length; idx++) {
             score.push(scores[idx][i]);
         }
-        var max_score = Math.max(...score)
-        var min_score = Math.min(...score)
+        let max_score = Math.max(...score)
+        let min_score = Math.min(...score)
         if ((score[i] == max_score && score.filter(s => s == max_score).length == 1) || (score[i] == min_score && score.filter(s => s == min_score).length == 1)) {
             console.log(score)
             average = (score.reduce((a, b) => a+ b, 0) - score[i])/(score.length - 1)
