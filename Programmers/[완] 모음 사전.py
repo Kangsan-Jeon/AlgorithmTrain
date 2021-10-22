@@ -10,9 +10,6 @@ def make_dict(char, char_list):
         else:
             result += [temp] + child_char
     return result
-    
-
-
 
 def solution(word):
     '''
@@ -31,8 +28,6 @@ def solution(word):
         dictionary += [char] + make_dict(char, char_list)
     answer = dictionary.index(word) + 1
     return answer
-
-
 
 examples = [
     "AAAAE",
